@@ -362,6 +362,7 @@ class IssueController extends Controller
                     ->select('sp_issue.issue_user', 'sp_issue.approve_date', 'sp_issue.approve_q', 'sp_issue.issue_date', 'sp_issue_detail.*', 'sp_supplier.sp_code', 'sp_supplier.sp_name', 'sp_unit.unit_name', 'sp_type.type_name', 'sp_department.dep_name', DB::raw('(select sum(qty) from sp_store where supplier_re_id=sp_supplier.id) as qtystore ') )
                     ->orderby('sp_supplier.sp_code', 'asc')
                     ->get();
+
             
              foreach ($result as $depname) 
              {
@@ -369,6 +370,7 @@ class IssueController extends Controller
                 $approve_q = $depname->approve_q;
                 $approve_date = $depname->approve_date;
                 $issue_date = $depname->issue_date;
+                $fullnameid = $depname->issue_user;
              }
             
             
@@ -405,6 +407,9 @@ class IssueController extends Controller
             $tbl .= '<tr> <td width="30" align="center">ลำดับ</td> <td width="220" align="center">รายการ</td> <td width="50" align="center" >เบิก</td> <td width="50" align="center">เหลือ</td> <td width="70" align="center">มูลค่า</td> <td width="150" align="center">หมายเหตุ</td> </tr>';
 			 
 			$r=0;
+            $sum1=0;
+            $sum2=0;
+            $sum3=0;
 		    foreach ($result as $key) 		    
 		    {	
 		       $r++;
@@ -422,14 +427,17 @@ class IssueController extends Controller
                 $tbl .= ' <td width="50" align="center">';
 			    $tbl .= $key->qty;
 			    $tbl .= ' </td>';
+                $sum1 += $key->qty;
                 
                 $tbl .= ' <td width="50" align="center">';
 			    $tbl .= (($key->qty_on_hand != '')?$key->qty_on_hand:'0');
 			    $tbl .= ' </td>';
+                $sum2 += $key->qty_on_hand;
                 
                 $tbl .= ' <td width="70" align="center">';
 			    $tbl .= (($key->price != '')?$key->price:'0');
 			    $tbl .= ' </td>';
+                $sum3 += $key->price;
                 
                 $tbl .= ' <td width="150" align="left" >   ';
 			    $tbl .= (($key->comment != '')?' '.$key->comment:'');
@@ -441,10 +449,25 @@ class IssueController extends Controller
 			}
 			
 			$tbl .='</table>';
-            
+
+            //รวม
+            $tbl .=' <table class="table-report">';
+            $tbl .=' <tr>';
+            $tbl .=' <td colspan="2" width="250" align="center">รวม</td>';
+            $tbl .=' <td width="50" align="center">'.$sum1.'</td>';
+            $tbl .=' <td width="50" align="center">'.$sum2.'</td>';
+            $tbl .=' <td width="70" align="center">'.$sum3.'</td>';
+            $tbl .=' <td width="150" align="center"></td>';
+            $tbl .=' </tr>';
+            $tbl .=' </table>';
+
+            //รายเซ็น
             $tbl .='<br /><br /> <table class="table-cent">';
             $tbl .='<tr> <td>ชื่อผู้อนุมัติ..............................................(หัวหน้าบริหาร)</td> <td>ชื่อผู้จ่าย..............................................(เจ้าหน้าที่บริหาร)</td> </tr>';
-            $tbl .='<tr> <td>ชื่อผู้เบิก..............................................(หน่วยงานที่เบิก)</td> <td>ชื่อผู้รับ..............................................(หน่วยงานที่เบิก)</td> </tr>';
+            $tbl .='<tr> <td width="220" align="center">   (   นายสมเกียรติ สกุลไพศาล   )      </td> <td  width="220" align="right" >(   นางสาวเสาวนีย์ สมัครณรงค์   )</td> </tr>';
+            
+            $tbl .='<tr> <td  width="260" align="center">ชื่อผู้เบิก..............................................(หน่วยงานที่เบิก) </td> <td width="250" align="center"> ชื่อผู้รับ..............................................(หน่วยงานที่เบิก)</td> </tr>';
+            $tbl .='<tr> <td width="220" align="center">   (   '.$this->getfullname($fullnameid).'   )      </td> <td  width="220" align="right" >(...........................................)</td> </tr>';            
             $tbl .='</table>';
 		   
 			$pdf->writeHTML( $tbl, true, false, false, false, '' );
@@ -977,6 +1000,22 @@ class IssueController extends Controller
     }
 
 
+
+    public function getfullname($id)
+    {
+        try
+        {
+            $d = DB::table('sp_user')        
+                ->where('id', '=', $id) 
+                ->select('fullname')
+                ->first();
+
+            return $d->fullname;
+        }
+        catch(\Exception $e){
+            return '-';
+        }
+    }
 
 
 
