@@ -60,7 +60,7 @@ class IssueController extends Controller
            
             date_default_timezone_set('Asia/Bangkok');
             
-            if( ($datenow == 2) && (date('Hi') > '1030') ){
+            if( ($datenow == 2) && (date('Hi') > '0900') ){
                 $status = 'close';
             }else{
                 $status = 'open';              
