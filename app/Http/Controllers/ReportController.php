@@ -141,11 +141,14 @@ class ReportController extends Controller
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (24, $row+2, $key->dep23);
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (25, $row+2, $key->dep24);
 
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (26, $row+2, $key->dep25);
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (27, $row+2, $key->dep26);
+
                     $s += ($key->dep1)+($key->dep2)+($key->dep3)+($key->dep4)+($key->dep5)+($key->dep6)+($key->dep7)+($key->dep8)+($key->dep9)+($key->dep10);	
                     $s += ($key->dep11)+($key->dep12)+($key->dep13)+($key->dep14)+($key->dep15)+($key->dep16)+($key->dep17)+($key->dep18)+($key->dep19)+($key->dep20);
-                    $s += ($key->dep21)+($key->dep22)+($key->dep23)+($key->dep24);
+                    $s += ($key->dep21)+($key->dep22)+($key->dep23)+($key->dep24)+($key->dep25)+($key->dep26);
 
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (26, $row+2, $s);       
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (28, $row+2, $s);       
                 
                 }
                 
