@@ -174,7 +174,7 @@
 	 * [userTable]
 	 */
 	var userTable = $('#user-data').dataTable( {
-        "iDisplayLength": 10,
+        "iDisplayLength": 30,
         "bLengthChange": false,
         "language": {
             "lengthMenu": "_MENU_ แถวต่อหน้า",
@@ -193,7 +193,7 @@
 	 * [depTable]
 	 */
 	var depTable = $('#department-data').dataTable( {
-        "iDisplayLength": 10,
+        "iDisplayLength": 30,
         "bLengthChange": false,
         "language": {
             "lengthMenu": "_MENU_ แถวต่อหน้า",
@@ -242,7 +242,7 @@
      * [unitTable]
      */
     var unitTable = $('#unit-data').dataTable( {
-        "iDisplayLength": 10,
+        "iDisplayLength": 30,
         "bLengthChange": false,
         "language": {
             "lengthMenu": "_MENU_ แถวต่อหน้า",
@@ -266,7 +266,7 @@
      * [typeTable]
      */
     var typeTable = $('#type-data').dataTable( {
-        "iDisplayLength": 10,
+        "iDisplayLength": 30,
         "bLengthChange": false,
         "language": {
             "lengthMenu": "_MENU_ แถวต่อหน้า",
@@ -290,7 +290,7 @@
 	 * [Table Calss all]
 	 */
 	var userTable = $('.tableall').dataTable( {
-        "iDisplayLength": 10,
+        "iDisplayLength": 30,
         "bLengthChange": false,
         "language": {
             "lengthMenu": "_MENU_ แถวต่อหน้า",
