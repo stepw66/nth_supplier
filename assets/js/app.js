@@ -404,7 +404,7 @@
     /**
     * page kumbuk_card
     */
-     function displayResultspdep(item) {     
+     function displayResultspdep(item) {    
         $('#kc_sp_dep').val(item.value);
     } 
     $('#id_dep').typeahead({

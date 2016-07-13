@@ -671,7 +671,7 @@ class ReportController extends Controller
             
 			$row = 2;
             
-            $sql  = ' select s1.id, s1.sp_name, s1.sp_code, s2.type_name, s0.priceunit, sum(s0.qty) as totalsp, s0.priceunit*sum(s0.qty) as totalprice';
+            $sql  = ' select s1.id, s1.sp_name, s1.sp_code, s2.type_name, s0.priceunit, sum(s0.qty) as totalsp, (select sum(ss0.pricetotal) from sp_store ss0 where ss0.supplier_re_id=s0.supplier_re_id and ss0.priceunit=s0.priceunit group by ss0.priceunit) as totalprice';
             $sql .= ' from sp_store s0';
             $sql .= ' left join sp_supplier s1 on s1.id = s0.supplier_re_id';
             $sql .= ' left join sp_type s2 on s2.type_code=s1.type_code';

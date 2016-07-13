@@ -24,7 +24,7 @@
       <li class="{{ $activeurl == '/' ? 'active' : '' }}"><a href="{!! url('/') !!}">Dashboard</a></li>
       
       @if( Session::get('level') == 1 || Session::get('level') == 2 )
-      <li class="dropdown">
+      <li class="dropdown {{ $activeurl == 'issue' ? 'active' : '' }} {{ $activeurl == 'listIssue' ? 'active' : '' }}">
         <a href="#!" data-target="#" class="dropdown-toggle" data-toggle="dropdown">เบิกพัสดุ <b class="caret"></b></a>
         <ul class="dropdown-menu">  
           <li><a href="{!! route('issue.index') !!}">เบิกพัสดุ</a></li>  
@@ -39,14 +39,21 @@
 
 
       @if( Session::get('level') == 1 || Session::get('level') == 2 )
-        <li class="dropdown">
+        <li class="dropdown {{ $activeurl == 'receive' ? 'active' : '' }} {{ $activeurl == 'listReceive' ? 'active' : '' }}">
           <a href="#!" data-target="#" class="dropdown-toggle" data-toggle="dropdown">รับพัสดุ <b class="caret"></b></a>
           <ul class="dropdown-menu">                      
             <li><a href="{!! route('receive.index') !!}">รับพัสดุ</a></li> 
             <li><a href="{!! url('listReceive') !!}">รายการรับพัสดุ</a></li> 
           </ul>
+        </li>  
+        <li class="dropdown {{ $activeurl == 'kbcard' ? 'active' : '' }} {{ $activeurl == 'listkbcard' ? 'active' : '' }}">
+          <a href="#!" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Kumbuk Card <b class="caret"></b></a>
+          <ul class="dropdown-menu">                      
+            <li><a href="{!! route('kbcard.index') !!}">สร้าง Kumbuk Card</a></li> 
+            <li><a href="{!! url('listkbcard') !!}">รายการ Kumbuk Card</a></li> 
+          </ul>
         </li>   
-        <li class="{{ $activeurl == 'kbcard' ? 'active' : '' }}"><a href="{!! route('kbcard.index') !!}">Kumbuk Card</a></li>
+
         <li class="{{ $activeurl == 'store' ? 'active' : '' }}"><a href="{!! route('store.index') !!}">คลังพัสดุ</a></li>
         <li class="{{ $activeurl == 'supplier' ? 'active' : '' }}"><a href="{!! route('supplier.index') !!}">รายการพัสดุ</a></li>
       @endif  
@@ -56,7 +63,7 @@
        @endif  
         
        @if( Session::get('level') == 1 || Session::get('level') == 2 ) 
-        <li class="dropdown {{ $activeurl == 'unit' ? 'active' : '' }} {{ $activeurl == 'type' ? 'active' : '' }} {{ $activeurl == 'department' ? 'active' : '' }} {{ $activeurl == 'appfig' ? 'active' : '' }}">
+        <li class="dropdown {{ $activeurl == 'around' ? 'active' : '' }}  {{ $activeurl == 'unit' ? 'active' : '' }} {{ $activeurl == 'type' ? 'active' : '' }} {{ $activeurl == 'department' ? 'active' : '' }} {{ $activeurl == 'appfig' ? 'active' : '' }} {{ $activeurl == 'company' ? 'active' : '' }}">
           <a href="#!" data-target="#" class="dropdown-toggle" data-toggle="dropdown">ข้อมูลพื้นฐาน <b class="caret"></b></a>
           <ul class="dropdown-menu">  
             <li><a href="{!! route('around.index') !!}">รอบเบิกพัสดุ</a></li>  

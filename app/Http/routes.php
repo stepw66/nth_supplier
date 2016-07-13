@@ -77,7 +77,9 @@ Route::get('gettempedit/{id}', 'ReceiveController@gettempedit');
 
 //---------------page kumbuk-----------------//
 Route::get('getspcode/{id}', 'KbCardController@getspcode');
+Route::get('listkbcard', 'KbCardController@listkbcard');
 Route::post('getspdep', 'KbCardController@getspdep');
+Route::get('kbcardprint/{id}', 'KbCardController@kbcardprint');
 
 
 

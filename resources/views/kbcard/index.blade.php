@@ -40,7 +40,7 @@
 					
 					<div class="form-group">
 					  <div class="center">
-						<input type="submit" class="btn btn-info btn-sm" id="add-issue-list" value="พิมพ์ Kumbuk Card" />
+						<input type="submit" class="btn btn-info btn-sm" value="พิมพ์ Kumbuk Card" />
 					  </div>
 					</div>	
 
