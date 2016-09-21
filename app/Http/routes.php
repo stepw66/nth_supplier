@@ -20,6 +20,7 @@ define('save_data', 'บันทึกข้อมูลเรียบร้�
 
 
 Route::get('/', 'HomeController@index');
+Route::get('downloads/app', 'HomeController@loadApp');
 
 
 
@@ -80,7 +81,7 @@ Route::get('getspcode/{id}', 'KbCardController@getspcode');
 Route::get('listkbcard', 'KbCardController@listkbcard');
 Route::post('getspdep', 'KbCardController@getspdep');
 Route::get('kbcardprint/{id}', 'KbCardController@kbcardprint');
-
+Route::get('kbcardprint_small/{id}', 'KbCardController@kbcardprint_small');
 
 
 

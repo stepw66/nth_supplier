@@ -42,13 +42,16 @@
 		                    <td>{{ $value->max_unit }}</td>  
 		                    <td>{{ $value->min_unit }}</td>                         
 		                    <td>  
-		                    	<a class="" href="{{ url( 'kbcardprint', e($value->id) ) }}">
+		                    	<a class="" href="{{ url( 'kbcardprint', e($value->id) ) }}" title="พิมพ์ใบใหญ่">
 	                            	<i class="mdi-action-print mdi-material-blue"></i>
-		                        </a>                         	 
-		                        <a class="" href="{{ route( 'kbcard.edit', e($value->id) ) }}">
+		                        </a> 
+								<a class="" href="{{ url( 'kbcardprint_small', e($value->id) ) }}" title="พิมพ์ใบเล็ก">
+	                            	<i class="mdi-action-print mdi-material-pink"></i>
+		                        </a>                          	 
+		                        <a class="" href="{{ route( 'kbcard.edit', e($value->id) ) }}" title="แก้ไข">
 	                            	<i class="mdi-content-create mdi-material-teal"></i>
 		                        </a>
-		                        <a class="btn-supplier-delete" href="{{ route( 'kbcard.destroy', e($value->id) ) }}" data-method="delete" data-confirm="ต้องการลบ {{ e($value->sp_name) }}" data-remote="false" rel="nofollow">
+		                        <a class="btn-supplier-delete" href="{{ route( 'kbcard.destroy', e($value->id) ) }}" title="ลบ" data-method="delete" data-confirm="ต้องการลบ {{ e($value->sp_name) }}" data-remote="false" rel="nofollow">
 		                            <i class="mdi-action-delete mdi-material-red"></i>
 		                        </a>	                       
 		                    </td>

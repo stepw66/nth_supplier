@@ -33,6 +33,18 @@
 		</div>
 		@endif
 
+		@if(Session::has('nosavedata'))
+		<br />	
+		<div class="row">
+		<div class="col-lg-12">
+			<div class="alert alert-dismissable alert-danger">         			  
+				<button type="button" class="close" data-dismiss="alert">×</button>	  
+			    <span>ไม่สามารถบันทึกข้อมูลได้</span>
+			</div>
+		</div>
+		</div>
+		@endif
+
 		<div class="row">
 		<div class="col-lg-12">
 			<div class="dataTables_wrapper no-footer">                

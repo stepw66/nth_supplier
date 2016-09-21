@@ -142,13 +142,15 @@ class ReportController extends Controller
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (25, $row+2, $key->dep24);
 
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (26, $row+2, $key->dep25);
+
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (27, $row+2, $key->dep26);
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (28, $row+2, $key->dep27);
 
                     $s += ($key->dep1)+($key->dep2)+($key->dep3)+($key->dep4)+($key->dep5)+($key->dep6)+($key->dep7)+($key->dep8)+($key->dep9)+($key->dep10);	
                     $s += ($key->dep11)+($key->dep12)+($key->dep13)+($key->dep14)+($key->dep15)+($key->dep16)+($key->dep17)+($key->dep18)+($key->dep19)+($key->dep20);
-                    $s += ($key->dep21)+($key->dep22)+($key->dep23)+($key->dep24)+($key->dep25)+($key->dep26);
+                    $s += ($key->dep21)+($key->dep22)+($key->dep23)+($key->dep24)+($key->dep25)+($key->dep26)+($key->dep27);
 
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (28, $row+2, $s);       
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (29, $row+2, $s);       
                 
                 }
                 
@@ -565,7 +567,7 @@ class ReportController extends Controller
                 $objPHPExcel->getActiveSheet()->getColumnDimension($c)->setWidth(20);	
                 $c++;
             }
-            
+            $c++;
             $objPHPExcel->getActiveSheet()->setCellValue($c.'1', 'รวม');
             $objPHPExcel->getActiveSheet()->getStyle($c)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
             $objPHPExcel->getActiveSheet()->getColumnDimension($c)->setWidth(20);
@@ -607,15 +609,17 @@ class ReportController extends Controller
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (23, $row+2, $key->dep22);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (24, $row+2, $key->dep23);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (25, $row+2, $key->dep24);
+
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (26, $row+2, $key->dep25);
                 
                 $s += ($key->dep1)+($key->dep2)+($key->dep3)+($key->dep4)+($key->dep5)+($key->dep6)+($key->dep7)+($key->dep8)+($key->dep9)+($key->dep10);	
 				$s += ($key->dep11)+($key->dep12)+($key->dep13)+($key->dep14)+($key->dep15)+($key->dep16)+($key->dep17)+($key->dep18)+($key->dep19)+($key->dep20);
-				$s += ($key->dep21)+($key->dep22)+($key->dep23)+($key->dep24);
+				$s += ($key->dep21)+($key->dep22)+($key->dep23)+($key->dep24)+($key->dep25);
                 
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (26, $row+2, $s);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (29, $row+2, $s);
                 
                 $sumprice += $key->price;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (27, $row+2, $sumprice);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow (30, $row+2, $sumprice);
                
 		   		$row++;			    	
 			}

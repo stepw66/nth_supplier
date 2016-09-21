@@ -1,14 +1,20 @@
 <footer>
 	 <div class="container">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <h5 class="white-text">ระบบเบิกพัสดุ โรงพยาบาลโนนไทย</h5>
             <p class="grey-text text-lighten-4">
                 คุณสามารถเบิกพัสดุผ่าน ระบบเบิกพัสดุ ได้ตามกำหนดเวลาที่ทางเจ้าหน้าที่พัสดุกำหนด
                 (ระบบแสดงผลได้ทุกขนาดหน้าจอ, ใช้งานได้ดีบน Google-Chrome และ Firefox และ IE 10+)
             </p>
           </div>
-          <div class="col-md-6">
+
+          <div class="col-md-4" style="overflow: hidden;">
+              <h5 class="white-text">ไฟล์ติดตั้ง STOCK-NTH</h5>
+              <a class="btn btn-danger btn-sm" href="{{ url('downloads/app') }}">โหลด App STOCK-NTH</a>
+          </div>
+
+          <div class="col-md-4">
             <h5 class="white-text">เมนู</h5>
             <ul class="list-unstyled">
               <li><a class="grey-text text-lighten-3" href="{!! url('/') !!}">Dashboard</a></li>

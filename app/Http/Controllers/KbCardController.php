@@ -121,9 +121,9 @@ class KbCardController extends Controller
             $data_sp = Supplier::find($data['supplier_id']);
            
            //----------- create card --------------//
-            $pagelayout = array(200, 300); //  or array($height, $width) 
+            $pagelayout = array(75, 188); //  or array($height, $width) 
 
-            $pdf = new TCPDF('p', 'pt', $pagelayout, true, 'UTF-8', false);
+            $pdf = new TCPDF('p', 'mm', $pagelayout, true, 'UTF-8', false);
 			$pdf->SetPrintHeader(false);
 		    $pdf->SetPrintFooter(false);	
 
@@ -133,59 +133,46 @@ class KbCardController extends Controller
 			$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 			 
 			// set margins
-			$pdf->SetMargins(0, 0, 0, 0);
+			$pdf->SetMargins(1, 1, 1);
+            $pdf->SetDisplayMode('fullpage', 'SinglePage', 'UseNone');
 			
 			$pdf->AddPage('P');
            
-
-            $pdf->SetFont('freeserif','',12,'',true);
-            $pdf->SetXY(0, 10);
-            $pdf->MultiCell(200, 0, 'โรงพยาบาลโนนไทย', 0, 'C', 0, 1, '', '', true); 
-           
             $pdf->SetFont('freeserif','B',12,'',true);
-            $pdf->SetXY(5, 30);
-            $pdf->MultiCell(195, 0, 'แผนก : '.$this->getsp_dep($data['kc_sp_dep']), 0, 'L', 0, 1, '', '', true);
+            $pdf->SetXY(1, 1);
+            $pdf->MultiCell(75, 0, 'แผนก : '.$this->getsp_dep($data['kc_sp_dep']), 0, 'L', 0, 1, '', '', true);
            
            
             $pdf->SetFont('freeserif','',12,'',true);
-            $pdf->SetXY(5, 65);
+            $pdf->SetXY(1, 12);
             $pdf->MultiCell(195, 0, 'เลขที่ : '.$data['supplier_code'], 0, 'L', 0, 1, '', '', true); 
-            $pdf->SetXY(5, 85);
-            $pdf->MultiCell(195, 0, 'รายการ : '.$this->getsp_name($data['supplier_id']), 0, 'L', 0, 1, '', '', true); 
+
+            $pdf->SetFont('freeserif','B',13,'',true);
+            $pdf->SetXY(1, 16);
+            $pdf->MultiCell(75, 0, 'รายการ : '.$this->getsp_name($data['supplier_id']), 0, 'L', 0, 1, '', '', true); 
            
-           
-            $pdf->SetFont('freeserif','B',12,'',true);
-            $pdf->SetXY(5, 120);
-            $pdf->MultiCell(195, 0, 'จำนวนมากสุด : '.$data['max_unit'], 0, 'L', 0, 1, '', '', true); 
-            $pdf->SetXY(5, 140);
-            $pdf->MultiCell(195, 0, 'จำนวนน้อยสุด : '.$data['min_unit'], 0, 'L', 0, 1, '', '', true);
+            $pdf->SetFont('freeserif','',12,'',true);       
+            $pdf->SetXY(1, 26);
+            $pdf->MultiCell(75, 0, 'จำนวนมากสุด : '.$data['max_unit']. ' จำนวนน้อยสุด : '.$data['min_unit'], 0, 'L', 0, 1, '', '', true); 
+
+            $pdf->SetFont('freeserif','B',14,'',true);
+            $pdf->SetXY(1, 31);
+            $pdf->MultiCell(75, 0, 'จำนวนที่เบิก : '.($data['max_unit']-$data['min_unit']), 0, 'L', 0, 1, '', '', true);
            
            
            $style = array(
-                'position' => '',
-                'align' => 'C',
-                'stretch' => false,
-                'fitwidth' => true,
-                'cellfitalign' => '',
-                'border' => true,
-                'hpadding' => 'auto',
+                'border' => 2,
                 'vpadding' => 'auto',
+                'hpadding' => 'auto',
                 'fgcolor' => array(0,0,0),
-                'bgcolor' => false, //array(255,255,255),
-                'text' => true,
-                'font' => 'helvetica',
-                'fontsize' => 8,
-                'stretchtext' => 4
+                'bgcolor' => false, //array(255,255,255)
+                'module_width' => 1, // width of a single module in points
+                'module_height' => 1 // height of a single module in points
             );
 
             $pdf->SetFont('freeserif','',11,'',true);
-            $pdf->SetXY(100, 230);          
-            $pdf->write2DBarcode($data['kc_sp_dep'].'|'.$data['max_unit'].'|'.$data['min_unit'].'|'.$data['supplier_id'].'|'.$data['supplier_code'].'|'.$data_sp->sp_name, 'QRCODE,Q', 75, 170, 50, 50, $style, 'N');
-           
-            
-            $pdf->SetFont('freeserif','',10,'',true);
-            $pdf->SetXY(0, 230);
-            $pdf->MultiCell(200, 0, 'Kanban Card', 0, 'C', 0, 1, '', '', true);
+            $pdf->SetXY(1, 50);          
+            $pdf->write2DBarcode($data['id_dep'].'|'.$data['max_unit'].'|'.$data['min_unit'].'|'.$data['supplier_id'].'|'.$data['supplier_code'].'|'.$data_sp['sp_name'], 'QRCODE,Q', 18, 56, 38, 32, $style, 'N');
            
            
             $filename = storage_path() . '/report/kumbukcard.pdf';
@@ -212,9 +199,10 @@ class KbCardController extends Controller
              $data_sp = Supplier::find($data->supplier_id);
 
              //----------- create card --------------//
-            $pagelayout = array(200, 300); //  or array($height, $width) 
+            $pagelayout = array(75, 188); //  or array($height, $width) 
 
-            $pdf = new TCPDF('p', 'pt', $pagelayout, true, 'UTF-8', false);
+            $pdf = new TCPDF('p', 'mm', $pagelayout, true, 'UTF-8', false);
+            //$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
             $pdf->SetPrintHeader(false);
             $pdf->SetPrintFooter(false);    
 
@@ -224,32 +212,31 @@ class KbCardController extends Controller
             $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
              
             // set margins
-            $pdf->SetMargins(0, 0, 0, 0);
+            $pdf->SetMargins(1, 1, 1);
+            $pdf->SetDisplayMode('fullpage', 'SinglePage', 'UseNone');
             
-            $pdf->AddPage('P');
+            $pdf->AddPage('P');       
            
+            $pdf->SetFont('freeserif','B',12,'',true);
+            $pdf->SetXY(1, 1);
+            $pdf->MultiCell(75, 0, 'แผนก : '.$this->getsp_dep($data->id_dep), 0, 'L', 0, 1, '', '', true);
+           
+           
+            $pdf->SetFont('freeserif','',12,'',true);
+            $pdf->SetXY(1, 12);
+            $pdf->MultiCell(75, 0, 'เลขที่ : '.$data['supplier_code'], 0, 'L', 0, 1, '', '', true); 
+            
+            $pdf->SetFont('freeserif','B',13,'',true);
+            $pdf->SetXY(1, 16);
+            $pdf->MultiCell(75, 0, 'รายการ : '.$this->getsp_name($data->supplier_id), 0, 'L', 0, 1, '', '', true); 
 
-            $pdf->SetFont('freeserif','',12,'',true);
-            $pdf->SetXY(0, 10);
-            $pdf->MultiCell(200, 0, 'โรงพยาบาลโนนไทย', 0, 'C', 0, 1, '', '', true); 
-           
-            $pdf->SetFont('freeserif','B',12,'',true);
-            $pdf->SetXY(5, 30);
-            $pdf->MultiCell(195, 0, 'แผนก : '.$this->getsp_dep($data->id_dep), 0, 'L', 0, 1, '', '', true);
-           
-           
-            $pdf->SetFont('freeserif','',12,'',true);
-            $pdf->SetXY(5, 65);
-            $pdf->MultiCell(195, 0, 'เลขที่ : '.$data['supplier_code'], 0, 'L', 0, 1, '', '', true); 
-            $pdf->SetXY(5, 85);
-            $pdf->MultiCell(195, 0, 'รายการ : '.$this->getsp_name($data->supplier_id), 0, 'L', 0, 1, '', '', true); 
-           
-           
-            $pdf->SetFont('freeserif','B',12,'',true);
-            $pdf->SetXY(5, 120);
-            $pdf->MultiCell(195, 0, 'จำนวนมากสุด : '.$data->max_unit, 0, 'L', 0, 1, '', '', true); 
-            $pdf->SetXY(5, 140);
-            $pdf->MultiCell(195, 0, 'จำนวนน้อยสุด : '.$data->min_unit, 0, 'L', 0, 1, '', '', true);
+            $pdf->SetFont('freeserif','',12,'',true);       
+            $pdf->SetXY(1, 26);
+            $pdf->MultiCell(75, 0, 'จำนวนมากสุด : '.$data->max_unit. ' จำนวนน้อยสุด : '.$data->min_unit, 0, 'L', 0, 1, '', '', true); 
+
+            $pdf->SetFont('freeserif','B',14,'',true);
+            $pdf->SetXY(1, 31);
+            $pdf->MultiCell(75, 0, 'จำนวนที่เบิก : '.($data->max_unit-$data->min_unit), 0, 'L', 0, 1, '', '', true);
            
            
            $style = array(
@@ -263,16 +250,86 @@ class KbCardController extends Controller
             );
 
             $pdf->SetFont('freeserif','',11,'',true);
-            $pdf->SetXY(100, 230);          
-            $pdf->write2DBarcode($data->id_dep.'|'.$data->max_unit.'|'.$data->min_unit.'|'.$data->supplier_id.'|'.$data->supplier_code.'|'.$data_sp->sp_name, 'QRCODE,Q', 75, 170, 50, 50, $style, 'N');
-           
-            
-            $pdf->SetFont('freeserif','',10,'',true);
-            $pdf->SetXY(0, 230);
-            $pdf->MultiCell(200, 0, 'Kanban Card', 0, 'C', 0, 1, '', '', true);
-           
+            $pdf->SetXY(1, 50);          
+            $pdf->write2DBarcode($data->id_dep.'|'.$data->max_unit.'|'.$data->min_unit.'|'.$data->supplier_id.'|'.$data->supplier_code.'|'.$data_sp->sp_name, 'QRCODE,Q', 18, 56, 38, 32, $style, 'N');
+        
            
             $filename = storage_path() . '/report/kumbukcard.pdf';
+            $contents = $pdf->output($filename, 'D');
+            
+        }else{
+            return Redirect::to('/');
+        }
+    }
+
+
+
+
+    /**
+    * print kb card small
+    */
+    public function kbcardprint_small($id){
+        if( Session::get('level') != '' && Session::get('fingerprint') == md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']) ){ 
+             $data = KbCard::find($id);
+             $data_sp = Supplier::find($data->supplier_id);
+
+             //----------- create card --------------//
+            $pagelayout = array(75, 188); //  or array($height, $width) 
+
+            $pdf = new TCPDF('p', 'mm', $pagelayout, true, 'UTF-8', false);
+            //$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $pdf->SetPrintHeader(false);
+            $pdf->SetPrintFooter(false);    
+
+            $pdf->SetHeaderData('', '', '', '');            
+                       
+            // set default monospaced font
+            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+             
+            // set margins
+            $pdf->SetMargins(0, 0, 0);
+            $pdf->SetDisplayMode('fullpage', 'SinglePage', 'UseNone');
+            
+            $pdf->AddPage('P');       
+
+            $pdf->SetFont('freeserif','B',12,'',true);
+            $pdf->SetXY(1, 1);
+            $pdf->MultiCell(75, 0, 'แผนก : '.$this->getsp_dep($data->id_dep), 0, 'L', 0, 1, '', '', true);
+           
+           
+            $pdf->SetFont('freeserif','',12,'',true);
+            $pdf->SetXY(1, 8);
+            $pdf->MultiCell(75, 0, 'เลขที่ : '.$data['supplier_code'], 0, 'L', 0, 1, '', '', true); 
+            
+            $pdf->SetFont('freeserif','B',12,'',true);
+            $pdf->SetXY(1, 12);
+            $pdf->MultiCell(75, 0, 'รายการ : '.$this->getsp_name($data->supplier_id), 0, 'L', 0, 1, '', '', true); 
+
+            $pdf->SetFont('freeserif','',12,'',true);       
+            $pdf->SetXY(1, 22);
+            $pdf->MultiCell(75, 0, 'จำนวนมากสุด : '.$data->max_unit. ' จำนวนน้อยสุด : '.$data->min_unit, 0, 'L', 0, 1, '', '', true); 
+
+            $pdf->SetFont('freeserif','B',13,'',true);
+            $pdf->SetXY(1, 27);
+            $pdf->MultiCell(75, 0, 'จำนวนที่เบิก : '.($data->max_unit-$data->min_unit), 0, 'L', 0, 1, '', '', true);
+           
+           
+           $style = array(
+                'border' => 2,
+                'vpadding' => 'auto',
+                'hpadding' => 'auto',
+                'fgcolor' => array(0,0,0),
+                'bgcolor' => false, //array(255,255,255)
+                'module_width' => 1, // width of a single module in points
+                'module_height' => 1 // height of a single module in points
+            );
+
+            $pdf->SetFont('freeserif','',11,'',true);
+            $pdf->SetXY(1, 25);          
+            $pdf->write2DBarcode($data->id_dep.'|'.$data->max_unit.'|'.$data->min_unit.'|'.$data->supplier_id.'|'.$data->supplier_code.'|'.$data_sp->sp_name, 'QRCODE,Q', 1, 35, 38, 32, $style, 'N');
+        
+           
+            $filename = storage_path() . '/report/kumbukcard_small.pdf';
             $contents = $pdf->output($filename, 'D');
             
         }else{

@@ -107,19 +107,23 @@ class UserController extends Controller
             {
                 $data = Request::all(); 
 
-                $user = new User();
-                $user->fullname     = $data['fullname'];
-                $user->username     = $data['username'];
-                $user->password     = Hash::make($data['password']);
-                $user->id_dep       = $data['id_dep'];
-                $user->level        = $data['level'];
-                $user->activated    = $data['activated'];
+                if($this->checkuser($data['username']) == 0){
+                    $user = new User();
+                    $user->fullname     = $data['fullname'];
+                    $user->username     = $data['username'];
+                    $user->password     = Hash::make($data['password']);
+                    $user->id_dep       = $data['id_dep'];
+                    $user->level        = $data['level'];
+                    $user->activated    = $data['activated'];
 
-                DB::transaction(function() use ($user) {
-                    $user->save();  
-                }); 
+                    DB::transaction(function() use ($user) {
+                        $user->save();  
+                    }); 
 
-                Session::flash( 'savedata', save_data );
+                    Session::flash( 'savedata', save_data );
+                }else{
+                    Session::flash( 'nosavedata', "" );
+                }
 
                 return Redirect::to('user');
             }
@@ -128,6 +132,16 @@ class UserController extends Controller
         {
             return Redirect::to('/');
         }
+    }
+
+
+
+
+
+    private function checkuser($uername)
+    {
+        $data = DB::table('sp_user')->where('username', $uername)->count();
+        return $data;
     }
 
 

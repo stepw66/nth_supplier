@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Support\Str;
 use Input;
 use Image;
 use Request;
@@ -65,6 +67,20 @@ class HomeController extends Controller
         else{
             return Redirect::to('login');
         }
+    }
+
+
+
+
+
+    public function loadApp()
+    {
+        $filename = 'stock-nth.apk';
+        $headers = array();
+        $disposition = 'attachment';
+        $response = new BinaryFileResponse(storage_path().'/'.$filename, 200, $headers, true);
+
+        return $response->setContentDisposition($disposition, $filename, Str::ascii($filename));
     }
 
 
